@@ -1,0 +1,13 @@
+.numpad {
+	width: var(--block-width);
+	padding: 4px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+
+	grid-gap: 8px;
+	justify-content: center;
+	align-content: center;
+	box-shadow: var(--shadow);
+	border-radius: 4px;
+}
