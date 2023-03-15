@@ -1,7 +1,7 @@
 import styles from './Board.module.scss';
 
 interface BoardProps {
-	value: number;
+	value: null | string | number;
 }
 
 export const Board = ({value}: BoardProps) => {
