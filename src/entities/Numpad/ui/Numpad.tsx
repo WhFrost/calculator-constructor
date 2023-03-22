@@ -22,8 +22,8 @@ export const Numpad = () => {
 			))}
 			<Button
 				text={','}
-				value={','}
-				onClick={() => dispatch(setCurrentValue(','))}
+				value={'.'}
+				onClick={() => dispatch(setCurrentValue('.'))}
 			/>
 		</div>
 	);

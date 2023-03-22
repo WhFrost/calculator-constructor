@@ -2,10 +2,10 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from './../../../app/store/store';
 
 export interface CalcSlice {
-	currentValue: string | number;
-	prevValue: string | number | null;
+	currentValue: string;
+	prevValue: string | null;
 	actionType: string | null;
-	result: number | null;
+	result: string | null;
 }
 
 const initialState: CalcSlice = {
@@ -20,6 +20,12 @@ export const calcSlice = createSlice({
 	initialState,
 	reducers: {
 		setCurrentValue: (state, action: PayloadAction<string>) => {
+			if (action.payload === '0' && state.currentValue === '0') {
+				return state;
+			}
+			if (action.payload === '.' && state.currentValue.includes('.')) {
+				return state;
+			}
 			state.currentValue =
 				state.currentValue === '0' || state.currentValue === state.prevValue
 					? action.payload
@@ -27,13 +33,19 @@ export const calcSlice = createSlice({
 		},
 		setActionType: (state, action: PayloadAction<string>) => {
 			state.actionType = action.payload;
-			state.prevValue = !state.prevValue ? state.currentValue : state.result;
+			if (!state.prevValue || !state.result) {
+				state.prevValue = state.currentValue;
+			}
+			state.result = initialState.result;
 		},
 		setResult: (state) => {
 			switch (state.actionType) {
 				case '+':
-					state.result = Number(state.prevValue) + Number(state.currentValue);
+					state.result = String(
+						Number(state.prevValue) + Number(state.currentValue),
+					);
 					state.prevValue = state.result;
+					state.currentValue = initialState.currentValue;
 					break;
 				default:
 					break;
